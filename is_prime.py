@@ -1,7 +1,7 @@
 '''
 Function  that checks if a number is prime or not
 '''
-def is_prime(num):
+def is_prime(num: int) -> bool:
     if num == None:
         return False
     elif num > 1:

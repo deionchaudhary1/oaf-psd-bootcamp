@@ -6,18 +6,18 @@ Function that tests the is_prime function in is_prime.py
 '''
 
 class TryTesting(unittest.TestCase):
-    def test_functional_1(self):
+    def test_functional(self):
         self.assertTrue(is_prime(11))
-    def test_functional_2(self):
         self.assertFalse(is_prime(4))
-    def test_functional_3(self):
         self.assertTrue(is_prime(53))
-    def test_nonfunctional_1(self):
+    def test_nonfunctional(self):
         self.assertFalse(is_prime(0))
-    def test_nonfunctional_2(self):
         self.assertFalse(is_prime(None))
-    def test_nonfuncional_3(self):
         self.assertFalse(is_prime(-1))
+        with self.assertRaises(TypeError):
+            is_prime("hello")
+            is_prime(3.283)
+        
 
 if __name__ == "__main__":
     unittest.main()
