@@ -14,5 +14,5 @@ class Weather:
 
 city = input("Enter a city: ")
 someCity = Weather(city)
-print(city + "'s humidity is " + someCity.get_humidity())
-print(city + "'s temperature is " + someCity.get_temp())
+print(str(city) + "'s humidity is " + str(someCity.get_humidity()))
+print(str(city) + "'s temperature is " + str(someCity.get_temp()))
