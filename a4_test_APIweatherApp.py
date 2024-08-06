@@ -3,18 +3,16 @@ This function tests the weatherApp's class functionality
 '''
 
 import unittest
-from a4_APIweatherApp import Service
-from a4_APIweatherApp import mockService
+from a4_APIweatherApp import MockService
 from a4_APIweatherApp import APIService
 from a4_APIweatherApp import ServiceFactory
-from a4_APIweatherApp import Handler
 
 class TryTesting(unittest.TestCase):
     def test_create_mock(self):
         mocky = ServiceFactory()
         mock = mocky.create_service(0)
         # Assert that mockFactory creates a mockService object
-        self.assertIsInstance(mock, mockService)
+        self.assertIsInstance(mock, MockService)
     
     def test_create_api(self):
         apiy = ServiceFactory()
