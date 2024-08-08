@@ -21,7 +21,10 @@ class Service(ABC):
 class MockService(Service):
     def get_weather_data(self):
         '''
-        DESC
+        This method generates mock time and temperature data
+        that resembles the same output from the Open Meteo API.
+        It then puts the data into a 2D array with a marker to signify
+        that it is a mock data set.
         '''
         dates = ["2024-08-02T02:00",
       "2024-08-02T03:00",
@@ -49,13 +52,17 @@ class MockService(Service):
       "2024-08-03T01:00"]
         temps = [19.4, 18.8, 18.2, 17.8, 17.7, 17.7, 17.9, 18, 18.1, 18.6, 18.8, 18.8, 18.9, 19.2, 19.4, 19.6, 19.4, 19.5, 19.4, 19, 18.5, 18, 17.6, 17.3]
         mockArray2d = [dates, temps, 0]
-        #return mockArray2d
+        return mockArray2d
 
 
 class APIService(Service):
     def get_weather_data(self):
         '''
-        DESC
+        This method asks for user input of the location of where they would
+        like to get temperature data from and then makes an API request call for weather and time in that location.
+        It puts the data into their respective arrays.
+        Finally, puts the data into a 2D array with a marker to signify
+        that it is an API data set.
         '''
         '''
         base_url = "https://api.open-meteo.com/v1/forecast"  
@@ -73,14 +80,15 @@ class APIService(Service):
             dates = response.json()['hourly']['time']
             temps = response.json()['hourly']['temperature_2m']
         apiArray2d = [dates, temps, 1]
-        #return apiArray2d
+        return apiArray2d
         
 
 
 class ServiceFactory(ABC):
     def create_service(self, num):
         '''
-        DESC
+        This method generates either an API or Mock Service instance based on
+        the input value.
         '''
         if num == Environment.PROD:  
             return APIService()  
@@ -94,7 +102,8 @@ class Handler:
 
     def plot(self):
         '''
-        DESC
+        This method takes the data of the given Service and generates a plot
+        of the temperature over time.
         '''
 
         values = []
@@ -110,7 +119,8 @@ class Handler:
 
 def main():
     '''
-    DESC
+    This main function calls both the Mock and API Services and makes sure
+    that it outputs a plot of the temperature over time for both.
     '''
     #API
     api_factory = ServiceFactory()
