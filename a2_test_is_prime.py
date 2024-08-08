@@ -1,5 +1,5 @@
 import unittest
-from is_prime import is_prime
+from a2_is_prime import is_prime
 
 '''
 Function that tests the is_prime function in is_prime.py
