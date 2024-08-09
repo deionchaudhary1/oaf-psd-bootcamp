@@ -1,0 +1,14 @@
+Job Parser Application
+GOAL: Using a GUI, a user is able to input their job preferences and this program outputs a list of jobs that fit them. 
+Making their overall job searching experience easier in this time of job shortages.
+
+Data Source: Adzuna's Job Advertising API
+    - This API holds a great amount of Job Listings and various endpoints that I can use in my application
+    to greater give the user more choices in what kind of jobs they wish to see.
+Data Storage: SQLite3
+    - SQLite3 will help us give a database of user input, jobs given to the user, and testing
+    - Also, im not fully sure on what SQLite will be used for so I am guessing
+Data Utilization: Allowing a user to simply get jobs that apply to them
+    - Using the data that the user inputs for their job preferences, I use the API
+    to call for jobs that fit those requirements and output them for the user to look through
+    and hopefully apply to.
