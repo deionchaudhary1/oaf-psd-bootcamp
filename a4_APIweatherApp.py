@@ -52,7 +52,9 @@ class MockService(Service):
       "2024-08-03T01:00"]
         temps = [19.4, 18.8, 18.2, 17.8, 17.7, 17.7, 17.9, 18, 18.1, 18.6, 18.8, 18.8, 18.9, 19.2, 19.4, 19.6, 19.4, 19.5, 19.4, 19, 18.5, 18, 17.6, 17.3]
         mockArray2d = [dates, temps, 0]
-        return mockArray2d
+        return mockArray2d    
+        
+        
 
 
 class APIService(Service):
@@ -64,7 +66,10 @@ class APIService(Service):
         Finally, puts the data into a 2D array with a marker to signify
         that it is an API data set.
         '''
-        '''
+        latitude = input("Please write your latitude: ")
+        longitude = input("Please write your longitude: ")
+        daily_weather_variable = "temperature_2m"
+
         base_url = "https://api.open-meteo.com/v1/forecast"  
         params = {}  
         params['latitude'] = latitude    # float  
@@ -72,15 +77,18 @@ class APIService(Service):
         params['hourly'] = daily_weather_variable    # string with "temperature_2m"  
 
         response = requests.get(base_url, params=params)
+        print(response.json())
         '''
         latitude = input("Please write your latitude: ")
         longitude = input("Please write your longitude: ")
-        response = requests.get(f'https://api.open-meteo.com/v1/forecast?{latitude}=52.52&{longitude}=13.41&hourly=temperature_2m')
-        if response.status_code == 200 and 'hourly' in response and 'time' in response and 'temperature_2m' in response:
-            dates = response.json()['hourly']['time']
-            temps = response.json()['hourly']['temperature_2m']
-        apiArray2d = [dates, temps, 1]
-        return apiArray2d
+        response = requests.get(f'https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&hourly=temperature_2m')
+        '''
+        
+        if response.status_code == 200:
+            dates = response.json()['hourly']['time'][0:24]
+            temps = response.json()['hourly']['temperature_2m'][0:24]
+            apiArray2d = [dates, temps, 1]
+            return apiArray2d   
         
 
 
@@ -107,8 +115,9 @@ class Handler:
         '''
 
         values = []
-        values = self.sv.get_weather_data() #error is here; Attribute of service
+        values = self.sv.get_weather_data()
             #returns the 2d array
+
         plt.scatter(values[0], values[1])
         if values[2] == 1:
             plt.title("API Service")
@@ -122,27 +131,20 @@ def main():
     This main function calls both the Mock and API Services and makes sure
     that it outputs a plot of the temperature over time for both.
     '''
+
     #API
     api_factory = ServiceFactory()
-    api = api_factory.create_service(1) #api is the instance of the API Service
+    api = api_factory.create_service(Environment.PROD) #api is the instance of the API Service
     ans = Handler(api)
     ans.plot() #returns the data
+    
 
     #MOCK
     mock_factory = ServiceFactory()
-    mock = mock_factory.create_service(0)
+    mock = mock_factory.create_service(Environment.TEST)
     mo = Handler(mock)
     mo.plot() #returns the data
 
 
 if __name__ == "__main__":
     main()
-
-#TO FIX ERROR: the service parameter for the Handler class is a NoneType
-    #What I changed:
-        #put the plotting in the Handler class, the services just return data - !
-        #rename getting() to get_weather_data() - !
-        #renamed mockService() to MockService()
-        #user input for location and f-string
-        #verifying data and include all API data
-        #changed Handler's give_out() to plot() - !

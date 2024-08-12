@@ -1,5 +1,5 @@
 Job Parser Application
-GOAL: Using a GUI, a user is able to input their job preferences and this program outputs a list of jobs that fit them. 
+GOAL: Through a GUI, a user is able to input their job preferences and this program outputs a list of jobs that fit them. 
 Making their overall job searching experience easier in this time of job shortages.
 
 Data Source: Adzuna's Job Advertising API
