@@ -85,12 +85,13 @@ class APIService(Service):
             "salary_min": salary_min
         }
 
-        response = requests.get(url, params=params)
-        print(response.json())
+        req = requests.get(url, params=params)
+        response = req.json()
+        #print(response.json())
             #can display pnly the link to the jobs
         
-        if response.status_code == 200:
-            link = response.json()['results']["redirect_url"]
+        if req.status_code == 200:
+            link = response[1][7]
             return link
 
 class ServiceFactory(ABC):
@@ -103,17 +104,6 @@ class ServiceFactory(ABC):
             return APIService()  
         elif num == Environment.TEST:  
             return MockService()
-
-
-
-
-
-
-
-
-
-
-
 
 
 

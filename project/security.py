@@ -17,7 +17,7 @@ class SecurityHandler:
         c = self.conn.cursor()
         c.execute('''
             CREATE TABLE IF NOT EXISTS users (
-                username TEXT PRIMARY KEY
+                username TEXT PRIMARY KEY,
                 password TEXT NOT NULL
             )
         ''')
@@ -43,7 +43,7 @@ class SecurityHandler:
         '''
         c = self.conn.cursor()
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        c.execute('SELECT * FROM users WHERE = ? AND password = ?', (username, hashed_password))
+        c.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, hashed_password))
         user = c.fetchone() #if no match, return None
         return user is not None #if not None, then return True
 
