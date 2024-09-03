@@ -14,10 +14,9 @@ class Service(ABC):
 class MockService(Service):
     def get_job_data(self):
         '''
-        This method generates mock time and temperature data
-        that resembles the same output from the Open Meteo API.
-        It then puts the data into a 2D array with a marker to signify
-        that it is a mock data set.
+        This method generates mock API call
+        that resembles the same output from the Adzuna API.
+        It then returns the following mock link.
         '''
         data = '''{
         "__CLASS__": "Adzuna::API::Response::JobSearchResults",
@@ -60,16 +59,15 @@ class MockService(Service):
         }
         '''
         link = "http://adzuna.co.uk/jobs/land/ad/129698749..."
+        link = "The mock link is " + link
         return link
 
 class APIService(Service):
     def get_job_data(self):
         '''
-        This method asks for user input of the location of where they would
-        like to get temperature data from and then makes an API request call for weather and time in that location.
-        It puts the data into their respective arrays.
-        Finally, puts the data into a 2D array with a marker to signify
-        that it is an API data set.
+        This method asks for user input of the job name, preffered location,
+        and minimum salary then makes an API request call for job link.
+        Then this function returns the link if it has returned correctly.
         '''
         what = input("Please enter the job's title: ")
         where = input("Please enter a preffered location: ")
@@ -91,7 +89,8 @@ class APIService(Service):
             #can display pnly the link to the jobs
         
         if req.status_code == 200:
-            link = response[1][7]
+            link = response['results'][0]['redirect_url']
+            link = "The job link is " + link
             return link
 
 class ServiceFactory(ABC):

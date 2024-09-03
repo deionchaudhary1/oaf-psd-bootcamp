@@ -1,6 +1,6 @@
 import argparse
 from security import SecurityHandler
-from project import ServiceFactory, APIService, MockService, Environment
+from project import ServiceFactory, Environment
 
 class Handler:
     def __init__(self, service): #the service will be injected
@@ -8,14 +8,13 @@ class Handler:
 
     def display(self):
         '''
-        This method takes the data of the given Service and generates a plot
-        of the temperature over time.
+        This method takes the data of the given job link and prints it out
         '''
         values = self.sv.get_job_data()
             #returns the 2d array
         print(values)
 
-def utilize_data():
+def data_call():
     #... creating factories
      #API
     api_factory = ServiceFactory()
@@ -45,7 +44,7 @@ if __name__ == "__main__":
     login = SecurityHandler()
     if not args.setup:
         if login.login_user(args.username, args.password):
-            utilize_data()
+            data_call()
         else:
             print("Invalid credentials")
     elif args.reset:
